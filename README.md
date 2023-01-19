@@ -10,11 +10,6 @@
 
 ## Introduction
 
-[The "executive summary" or "abstract".
-Explain in a few sentences what the goals of the project are,
-and a brief overview of how the solution works.
-This should be no more than 1-2 paragraphs.]
-
 WebViews are widely used for building apps on the dominating mobile and desktop platforms. Up to 30% of apps found in the app stores (Apple and Google) are built with frameworks like Apache Cordova and CapacitorJS. Those two frameworks use one big WebView for providing app developers a native wrapper and some plugins for their Web app. App developers build their Web application and put the HTML, CSS and JavaScript files in one folder. The framework then takes care of building a native app project and bundling the Web code as a native application ready to distribute via the app stores.
 
 Using this approach the native app is responsible for "hosting" the content for the WebView. In the past this was often done by using the file protocol (`file:/path/to/content`) to load the Web content from the app bundle. Mondern web APIs and some frontend frameworks don't work with pages loaded from `file:`. This led WebView vendors to build APIs for app developers to load their content into the WebView. The existing APIs uses each their own different approaches and origins, which imposes challenges to developers.
@@ -22,6 +17,9 @@ Using this approach the native app is responsible for "hosting" the content for 
 ## Goals [or Motivating Use Cases, or Scenarios]
 
 [What is the **end-user need** which this project aims to address?]
+
+- different origins
+- different capabilities to modify/intercept requests & response
 
 ## Non-goals
 
