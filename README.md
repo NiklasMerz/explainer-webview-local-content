@@ -18,8 +18,8 @@ Using this approach the native app is responsible for "hosting" the content for 
 
 [What is the **end-user need** which this project aims to address?]
 
-- different origins
-- different capabilities to modify/intercept requests & response
+> - different origins
+> - different capabilities to modify/intercept requests & response
 
 ## Non-goals
 
@@ -71,6 +71,8 @@ If there is no suitable external documentation, you might like to provide supple
 
 ### [Tricky design choice #1]
 
+> discuss Android WebView approach
+
 [Talk through the tradeoffs in coming to the specific design point you want to make.]
 
 ```js
@@ -82,7 +84,7 @@ in which case you should link to any active discussion threads.]
 
 ### [Tricky design choice 2]
 
-[etc.]
+> discuss WKWebView approach
 
 ## Considered alternatives
 
