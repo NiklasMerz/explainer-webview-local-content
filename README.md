@@ -10,23 +10,30 @@
 
 ## Introduction
 
-WebViews are widely used for building apps on the dominating mobile and desktop platforms. Up to 30% of apps found in the app stores (Apple and Google) are built with frameworks like Apache Cordova and CapacitorJS. Those two frameworks use one big WebView for providing app developers a native wrapper and some plugins for their Web app. App developers build their Web application and put the HTML, CSS and JavaScript files in one folder. The framework then takes care of building a native app project and bundling the Web code as a native application ready to distribute via the app stores.
+WebViews are widely used for building apps on the dominating mobile and desktop platforms. Up to 30% of apps found in the app stores (Apple and Google) are built with frameworks like Apache Cordova and CapacitorJS. For example those two frameworks use one big WebView for providing app developers a native wrapper and some plugins for their Web app. App developers build their Web application and put the HTML, CSS and JavaScript files in one folder. The framework then takes care of building a native app project and bundling the Web code as a native application ready to distribute via the app stores.
 
-Using this approach the native app is responsible for "hosting" the content for the WebView. In the past this was often done by using the file protocol (`file:/path/to/content`) to load the Web content from the app bundle. Mondern web APIs and some frontend frameworks don't work with pages loaded from `file:`. This led WebView vendors to build APIs for app developers to load their content into the WebView. The existing APIs uses each their own different approaches and origins, which imposes challenges to developers.
+Using this approach the native app is responsible for "hosting" the content for the WebView. In the past the file protocol (`file:/path/to/content`) was often used to load the Web content from the app bundle. Modern web APIs and some frontend frameworks don't work well with pages loaded from `file:`. This led WebView vendors to build APIs for app developers to load their content into the WebView. The existing APIs have each different capabilities and origins, which imposes challenges to developers.
 
 ## Goals [or Motivating Use Cases, or Scenarios]
 
 [What is the **end-user need** which this project aims to address?]
 
-> - different origins
-> - different capabilities to modify/intercept requests & response
+> - Different capabilities to modify/intercept requests & response
+
+The goal of this explainer is to propose a new API for WebViews to serve web content from the local file system. App developers should be able to use the same origin and capabilities to provide their web content to WebViews on different platforms.
 
 ## Non-goals
 
 [If there are "adjacent" goals which may appear to be in scope but aren't,
-enumerate them here. This section may be fleshed out as your design progresses and you encounter necessary technical and other trade-offs.]
+enumerate them here. This section may be fleshed out as your design progresses, and you encounter necessary technical and other trade-offs.]
 
-## [API 1]
+> proxy requests?
+
+## API proposals
+
+The code examples for the API proposal are written in JavaScript for demonstration purpose only. WebView APIs are typically provided in one or more languages typically used on the platform respectively. The sample code should just provide an idea how the proposed capabilities should look like.
+
+### [API 1]
 
 [For each related element of the proposed solution - be it an additional WebView API, a new web platform API, a new concept etc., create a section which briefly describes it.]
 
@@ -47,9 +54,13 @@ If there is no suitable external documentation, you might like to provide supple
 
 [If spec work is in progress, link to the PR or draft of the spec.]
 
-## [API 2]
+> register custom scheme
+
+### [API 2]
 
 [etc.]
+
+> intercept request
 
 ## Key scenarios
 
@@ -57,21 +68,18 @@ If there is no suitable external documentation, you might like to provide supple
 
 ### Scenario 1
 
-[Description of the end-user scenario]
-
-```js
-// Sample code demonstrating how to use these APIs to address that scenario.
-```
+> loading content from the file system / app bundle
 
 ### Scenario 2
 
-[etc.]
+> loading content from a remote server (proxy)
+> doing native requests from various reasons
 
 ## Detailed design discussion
 
 ### [Tricky design choice #1]
 
-> discuss Android WebView approach
+> discuss "normal" origin vs custom scheme
 
 [Talk through the tradeoffs in coming to the specific design point you want to make.]
 
@@ -84,7 +92,7 @@ in which case you should link to any active discussion threads.]
 
 ### [Tricky design choice 2]
 
-> discuss WKWebView approach
+> discuss WKWebView approach dowsides
 
 ## Considered alternatives
 
@@ -95,6 +103,8 @@ from high level architectural decisions down to alternative naming choices.]
 
 [Describe an alternative which was considered,
 and why you decided against it.]
+
+> Webviews loosen restrictions on file: URLs
 
 ### [Alternative 2]
 
