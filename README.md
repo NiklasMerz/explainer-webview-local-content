@@ -12,7 +12,7 @@
 
 WebViews are widely used for building apps on the dominating mobile and desktop platforms. Up to 30% of apps found in the app stores (Apple and Google) are built with frameworks like Apache Cordova and CapacitorJS. For example those two frameworks use one big WebView for providing app developers a native wrapper and some plugins for their Web app. App developers build their Web application and put the HTML, CSS and JavaScript files in one folder. The framework then takes care of building a native app project and bundling the Web code as a native application ready to distribute via the app stores.
 
-Using this approach the native app is responsible for "hosting" the content for the WebView. In the past the file protocol (`file:/path/to/content`) was often used to load the Web content from the app bundle. Modern web APIs and some frontend frameworks don't work well with pages loaded from `file:`. This led WebView vendors to build APIs for app developers to load their content into the WebView. The existing APIs have each different capabilities and origins, which imposes challenges to developers.
+Using this approach the native app is responsible for "hosting" the content for the WebView. In the past the file protocol (`file:/path/to/content`) was often used to load the Web content from the app bundle. Modern web APIs and some frontend frameworks don't work well with pages loaded from `file:`. This led WebView vendors to build their own APIs for app developers to load their content into the WebView. The existing APIs have each different capabilities and URL schemes, which imposes challenges to developers.
 
 ## Goals [or Motivating Use Cases, or Scenarios]
 
@@ -58,9 +58,11 @@ If there is no suitable external documentation, you might like to provide supple
 
 ### [API 2]
 
-[etc.]
+> path handler like android
 
-> intercept request
+### [API 3]
+
+> intercept request like iOS
 
 ## Key scenarios
 
@@ -68,18 +70,30 @@ If there is no suitable external documentation, you might like to provide supple
 
 ### Scenario 1
 
-> loading content from the file system / app bundle
+A popular use case for WebViews are so-called hybrid apps. This app development concept means that a native app consists of one WebView that is used to render the entire apps UI. These apps very often load their web content (HTML, CSS JavaScript) files from the local file system.
+
+Traditionally the `file:` protocol could be used for loading the files just like normal browsers do. A couple of reasons and changes in common web engine behavior and frontend development make this no longer feasible. Namely, some things are:
+
+* Popular JavaScript frameworks like React, Angular etc. build their JavaScript based internal routing systems around "normal" web URLs and won't work with `file:` URLs.
+* JavaScript HTTP requests using XMLHttpRequest or fetch (also known as AJAX) don't work well with `file:` URLs. Wen engines consider `file:` URLs a privacy-sensitive context and set the "Origin" of the header to `null` following [RFC-6454](https://www.rfc-editor.org/rfc/rfc6454#section-7.3). This makes [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) request difficult or impossible.
+
+The proposed APIs can be used to load local content on a regular, non-privacy-sensitive origin and therefore allow developers to build their web application just like for a regular browser context.
 
 ### Scenario 2
 
 > loading content from a remote server (proxy)
 > doing native requests from various reasons
 
+In some use cases developers using WebViews might want to intercept or modify requests to certain URLs. Some examples:
+
+* **Session sharing**: If a user logins into a native app and opens a WebView it should be able to use the same session as the native user session and vice versa. The proposed interception API can be used to extract or add authentication information for requests to certain URLs to share them with the native layer to make it possible do HTTP requests with the same authentication information in the native or Web context. These authentication information are typically cookies or auth tokens in headers that could be modified by the interception API.
+* **Additional Security**: HTTP Public Key Pinning
+
 ## Detailed design discussion
 
 ### [Tricky design choice #1]
 
-> discuss "normal" origin vs custom scheme
+> discuss "normal" http(s) origin vs custom scheme
 
 [Talk through the tradeoffs in coming to the specific design point you want to make.]
 
