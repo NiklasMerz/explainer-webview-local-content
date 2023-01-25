@@ -12,26 +12,22 @@
 
 WebViews are widely used for building apps on the dominating mobile and desktop platforms. Up to 30% of apps found in the app stores (Apple and Google) are built with frameworks like Apache Cordova and CapacitorJS. For example those two frameworks use one big WebView for providing app developers a native wrapper and some plugins for their Web app. App developers build their Web application and put the HTML, CSS and JavaScript files in one folder. The framework then takes care of building a native app project and bundling the Web code as a native application ready to distribute via the app stores.
 
-Using this approach the native app is responsible for "hosting" the content for the WebView. In the past the file protocol (`file:/path/to/content`) was often used to load the Web content from the app bundle. Modern web APIs and some frontend frameworks don't work well with pages loaded from `file:`. This led WebView vendors to build their own APIs for app developers to load their content into the WebView. The existing APIs have each different capabilities and URL schemes, which imposes challenges to developers.
+Using this approach the native app is responsible for "hosting" the content for the WebView. Traditionally the file protocol (`file:/path/to/content`) was often used to load the Web content from the app bundle. Modern web APIs and some frontend frameworks don't work well with pages loaded from `file:`. This led WebView vendors to build their own APIs for app developers to load their content into the WebView. The existing APIs have each different capabilities and URL schemes, which imposes challenges to developers.
 
-## Goals [or Motivating Use Cases, or Scenarios]
+## Goals
 
-[What is the **end-user need** which this project aims to address?]
-
-> - Different capabilities to modify/intercept requests & response
-
-The goal of this explainer is to propose a new API for WebViews to serve web content from the local file system. App developers should be able to use the same origin and capabilities to provide their web content to WebViews on different platforms.
+The goal of this explainer is to propose a new API for WebViews to serve web content from the local file system. App developers should be able to use the same origin and capabilities to provide their web content to WebViews on different platforms. This also includes an API to intercept and modify requests & responses to certain URLs for delivering web content and exchanging information between the WebView and native layer.
 
 ## Non-goals
 
-[If there are "adjacent" goals which may appear to be in scope but aren't,
-enumerate them here. This section may be fleshed out as your design progresses, and you encounter necessary technical and other trade-offs.]
+<!-- If there are "adjacent" goals which may appear to be in scope but aren't,
+enumerate them here. This section may be fleshed out as your design progresses, and you encounter necessary technical and other trade-offs. -->
 
-> proxy requests?
+Providing an API that can be used as a network interceptor/proxy for request to arbitrary URLs is not in scope of this document.   
 
 ## API proposals
 
-The code examples for the API proposal are written in JavaScript for demonstration purpose only. WebView APIs are typically provided in one or more languages typically used on the platform respectively. The sample code should just provide an idea how the proposed capabilities should look like.
+The code examples for the API proposals are written in JavaScript for demonstration purpose only. WebView APIs are provided in one or more languages typically used on the platform respectively. The sample code should just provide an idea how the proposed capabilities should look like.
 
 ### [API 1]
 
