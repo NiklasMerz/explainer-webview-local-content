@@ -51,17 +51,17 @@ If there is no suitable external documentation, you might like to provide supple
 
 ### [API 2]
 
-> path handler like android
+> path handler with asset directory to load files like android
 
 ### [API 3]
 
-> intercept request like iOS
+> intercept & modify request
 
 ## Key scenarios
 
 [If there are a suite of interacting APIs, show how they work together to solve the key scenarios described.]
 
-### Scenario 1
+### Hybrid Apps
 
 A popular use case for WebViews are so-called hybrid apps. This app development concept means that a native app consists of one WebView that is used to render the entire apps UI. These apps very often load their web content (HTML, CSS JavaScript) files from the local file system.
 
@@ -72,21 +72,21 @@ Traditionally the `file:` protocol could be used for loading the files just like
 
 The proposed APIs can be used to load local content on a regular, non-privacy-sensitive origin and therefore allow developers to build their web application just like for a regular browser context.
 
-### Scenario 2
+> TODO explain flow with code examples
+
+### Custom HTTP requests in the native layer
 
 > loading content from a remote server (proxy)
 > doing native requests from various reasons
 
 In some use cases developers using WebViews might want to intercept or modify requests to certain URLs. Some examples:
 
-* **Session sharing**: If a user logins into a native app and opens a WebView it should be able to use the same session as the native user session and vice versa. The proposed interception API can be used to extract or add authentication information for requests to certain URLs to share them with the native layer to make it possible do HTTP requests with the same authentication information in the native or Web context. These authentication information are typically cookies or auth tokens in headers that could be modified by the interception API.
+* **Session sharing**: If a user logins into a native app and opens a WebView it should be able to use the same session as the native user session and vice versa. The proposed interception API can be used to extract or add authentication information for requests to certain URLs to share them with the native layer to make it possible do HTTP requests with the same authentication information in native or Web context. These authentication information are typically cookies or auth tokens in headers that could be modified by the interception API.
 * **Additional Security**: HTTP Public Key Pinning
 
 ## Detailed design discussion
 
-### [Tricky design choice #1]
-
-> discuss "normal" http(s) origin vs custom scheme
+### Custom scheme vs HTTP(S) Origin
 
 [Talk through the tradeoffs in coming to the specific design point you want to make.]
 
@@ -97,25 +97,24 @@ In some use cases developers using WebViews might want to intercept or modify re
 [This may be an open question,
 in which case you should link to any active discussion threads.]
 
-### [Tricky design choice 2]
+### Proxy API
 
-> discuss WKWebView approach dowsides
+> URL handler can be used for proxy intercepting
 
 ## Considered alternatives
 
 [This should include as many alternatives as you can,
 from high level architectural decisions down to alternative naming choices.]
 
-### [Alternative 1]
+### WebViews don't consider the `file:` protocol as privacy-sensitive content.
 
-[Describe an alternative which was considered,
-and why you decided against it.]
+> TODO research standards & Android + iOS WebView changes 
 
-> Webviews loosen restrictions on file: URLs
+[RFC 6454 The Web Origin Concept](https://www.rfc-editor.org/rfc/rfc6454#section-7.3) does not define privacy-sensitive contexts therefore WebViews could consider setting the Origin header with a valid value to avoid the issues with CORS requests as mentioned before.
 
-### [Alternative 2]
+### Dedicated URL & Origin for content loading in WebViews
 
-[etc.]
+
 
 ## References & acknowledgements
 
