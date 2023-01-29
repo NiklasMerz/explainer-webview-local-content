@@ -23,7 +23,7 @@ The goal of this explainer is to propose a new API for WebViews to serve web con
 <!-- If there are "adjacent" goals which may appear to be in scope but aren't,
 enumerate them here. This section may be fleshed out as your design progresses, and you encounter necessary technical and other trade-offs. -->
 
-Providing an API that can be used as a network interceptor/proxy for request to arbitrary URLs is not in scope of this document.   
+Providing an API that can be used as a network interceptor/proxy for requests to arbitrary URLs is not in scope of this explainer.   
 
 ## API proposals
 
@@ -46,9 +46,6 @@ The code examples for the API proposals are written in JavaScript for demonstrat
 [Where necessary, provide links to longer explanations of the relevant pre-existing concepts and API.
 If there is no suitable external documentation, you might like to provide supplementary information as an appendix in this document, and provide an internal link where appropriate.]
 
-[If this is already specced, link to the relevant section of the spec.]
-
-[If spec work is in progress, link to the PR or draft of the spec.]
 
 > register custom scheme
 
@@ -125,6 +122,8 @@ and why you decided against it.]
 [Your design will change and be informed by many people; acknowledge them in an ongoing way! It helps build community and, as we only get by through the contributions of many, is only fair.]
 
 [Unless you have a specific reason not to, these should be in alphabetical order.]
+
+The proposed APIs and features are largely inspired by the [Android WebViewAssetLoader](https://developer.android.com/reference/androidx/webkit/WebViewAssetLoader) and [iOS WKURLSchemeHandler](https://developer.apple.com/documentation/webkit/wkurlschemehandler). This explainer tries to combine the best of both approaches into common APIs for every WebView platform.
 
 Many thanks for valuable feedback and advice from:
 
