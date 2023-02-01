@@ -29,37 +29,65 @@ Providing an API that can be used as a network interceptor/proxy for requests to
 
 The code examples for the API proposals are written in JavaScript for demonstration purpose only. WebView APIs are provided in one or more languages typically used on the platform respectively. The sample code should just provide an idea how the proposed capabilities should look like.
 
-### [API 1]
+### Register custom scheme
 
-[For each related element of the proposed solution - be it an additional WebView API, a new web platform API, a new concept etc., create a section which briefly describes it.]
+<!-- For each related element of the proposed solution - be it an additional WebView API, a new web platform API, a new concept etc., create a section which briefly describes it. -->
 
 ```js
-// Provide example code - not IDL - demonstrating the design of the feature.
 
-// If this API can be used on its own to address a user need,
-// link it back to one of the scenarios in the goals section.
+const webview = new WebView()
 
-// If you need to show how to get the feature set up
-// (initialized, or using permissions, etc.), include that too.
+webview.registerScheme('myapp://')
+
 ```
 
-[Where necessary, provide links to longer explanations of the relevant pre-existing concepts and API.
-If there is no suitable external documentation, you might like to provide supplementary information as an appendix in this document, and provide an internal link where appropriate.]
+<!-- Where necessary, provide links to longer explanations of the relevant pre-existing concepts and API.
+If there is no suitable external documentation, you might like to provide supplementary information as an appendix in this document, and provide an internal link where appropriate. -->
 
 
-> register custom scheme
+### Intercept & modify request + response
 
-### [API 2]
+This API allows you to interact with HTTP request to your custom scheme.
 
-> path handler with asset directory to load files like android
+```js
 
-### [API 3]
+webview.shouldInterceptRequest((request) =>{
 
-> intercept & modify request
+    // Intercept request and create new reponse
+
+    if (request.hostname == 'localcontent') {
+
+        // Here you could build a new reponse from locally loaded files or fetched files from the native layer
+        response = new Reponse('MY HTML CONTENT HERE');
+        reponse.setCookie('intercepted', 'true')
+        reponse.setHeader('Intercepted', 'true');
+
+        return reponse;
+    }
+
+    // Request should not be handled here and is handled normally by the WebView
+    return undefined;
+})
+
+```
+
+The callback function of `shouldInterceptRequest` receives all requests to registered custom schemes and returns the desired response. If no response is given (null value) the WebView falls back to its regular behavior.
+
+### Default asset loader
+
+There could be an integrated API for just loading files from a directory with no further interaction needed.
+
+```js
+
+const webview = new WebView()
+
+webview.registerPathHanlder('myapp://', '/path/to/local/files')
+
+```
 
 ## Key scenarios
 
-[If there are a suite of interacting APIs, show how they work together to solve the key scenarios described.]
+<!--If there are a suite of interacting APIs, show how they work together to solve the key scenarios described. -->
 
 ### Hybrid Apps
 
@@ -88,18 +116,28 @@ In some use cases developers using WebViews might want to intercept or modify re
 
 ### Custom scheme vs HTTP(S) Origin
 
-[Talk through the tradeoffs in coming to the specific design point you want to make.]
+<!-- Talk through the tradeoffs in coming to the specific design point you want to make. -->
+
+There are different options for the special URL that should be handled by this API. Both options are used right now by existing WebView implementations.
 
 ```js
-// Illustrated with example code.
+const webview = new WebView()
+
+webview.registerScheme('myapp://') // Used by iOS WKURLSchemeHandler
+
+// or 
+
+webview.registerScheme('https://localcontent.mydomain.com') // Used by Android WebViewAssetLoader
 ```
 
-[This may be an open question,
-in which case you should link to any active discussion threads.]
+The custom scheme variant is probably favorable, because this avoids conflicts and possibly malicious attempts with existing internet addresses. Officially registered and non-standard custom schemes are widely used for different purposes in apps.
+
+<!-- This may be an open question,
+in which case you should link to any active discussion threads. -->
 
 ### Proxy API
 
-> URL handler can be used for proxy intercepting
+> URL handler can be used for a proxy-like implementation of all web requests from the WebView through the native layer
 
 ## Considered alternatives
 
@@ -112,21 +150,21 @@ from high level architectural decisions down to alternative naming choices.]
 
 [RFC 6454 The Web Origin Concept](https://www.rfc-editor.org/rfc/rfc6454#section-7.3) does not define privacy-sensitive contexts therefore WebViews could consider setting the Origin header with a valid value to avoid the issues with CORS requests as mentioned before.
 
-### Dedicated URL & Origin for content loading in WebViews
-
-
 
 ## References & acknowledgements
 
-[Your design will change and be informed by many people; acknowledge them in an ongoing way! It helps build community and, as we only get by through the contributions of many, is only fair.]
+<!-- Your design will change and be informed by many people; acknowledge them in an ongoing way! It helps build community and, as we only get by through the contributions of many, is only fair.]
+[Unless you have a specific reason not to, these should be in alphabetical order. -->
 
-[Unless you have a specific reason not to, these should be in alphabetical order.]
+The proposed APIs and features are largely inspired by [Androids WebViewAssetLoader](https://developer.android.com/reference/androidx/webkit/WebViewAssetLoader) and [iOS' WKURLSchemeHandler](https://developer.apple.com/documentation/webkit/wkurlschemehandler). This explainer tries to combine the best of both approaches into common APIs for every WebView platform.
 
-The proposed APIs and features are largely inspired by the [Android WebViewAssetLoader](https://developer.android.com/reference/androidx/webkit/WebViewAssetLoader) and [iOS WKURLSchemeHandler](https://developer.apple.com/documentation/webkit/wkurlschemehandler). This explainer tries to combine the best of both approaches into common APIs for every WebView platform.
 
+<!--
 Many thanks for valuable feedback and advice from:
 
 - [Person 1]
 - [Person 2]
 - [etc.]
+
+-->
 
