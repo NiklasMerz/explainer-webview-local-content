@@ -37,7 +37,8 @@ The code examples for the API proposals are written in JavaScript for demonstrat
 
 const webview = new WebView()
 
-webview.registerScheme('myapp://')
+// webview should intercept request to "myapp://"
+webview.registerScheme('myapp')
 
 ```
 
@@ -53,8 +54,7 @@ This API allows you to interact with HTTP request to your custom scheme.
 
 webview.shouldInterceptRequest((request) =>{
 
-    // Intercept request and create new reponse
-
+    // Intercept only request to "myapp://localcontent" and create new reponse
     if (request.hostname == 'localcontent') {
 
         // Here you could build a new reponse from locally loaded files or fetched files from the native layer
@@ -81,7 +81,7 @@ There could be an integrated API for just loading files from a directory with no
 
 const webview = new WebView()
 
-webview.registerPathHanlder('myapp://', '/path/to/local/files')
+webview.registerPathHanlder('myapp', '/path/to/local/files')
 
 ```
 
@@ -123,7 +123,7 @@ There are different options for the special URL that should be handled by this A
 ```js
 const webview = new WebView()
 
-webview.registerScheme('myapp://') // Used by iOS WKURLSchemeHandler
+webview.registerScheme('myapp') // Used by iOS WKURLSchemeHandler
 
 // or 
 
