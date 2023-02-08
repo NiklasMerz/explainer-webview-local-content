@@ -111,6 +111,7 @@ In some use cases developers using WebViews might want to intercept or modify re
 
 * **Session sharing**: If a user logins into a native app and opens a WebView it should be able to use the same session as the native user session and vice versa. The proposed interception API can be used to extract or add authentication information for requests to certain URLs to share them with the native layer to make it possible do HTTP requests with the same authentication information in native or Web context. These authentication information are typically cookies or auth tokens in headers that could be modified by the interception API.
 * **Additional Security**: HTTP Public Key Pinning
+* **InAppUpdates**: Apps might want to load content from servers instead of the local files. This could be for offline mode implementations or getting newer versions without updating the complete app.
 
 ## Detailed design discussion
 
