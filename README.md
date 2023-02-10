@@ -128,7 +128,13 @@ webview.registerScheme('myapp') // Used by iOS WKURLSchemeHandler
 webview.registerScheme('https://localcontent.mydomain.com') // Used by Android WebViewAssetLoader
 ```
 
-The custom scheme variant is probably favorable, because this avoids conflicts and possibly malicious attempts with existing internet addresses. Officially registered and non-standard custom schemes are widely used for different purposes in apps.
+The custom scheme variant is straightforward, because this avoids conflicts with existing internet addresses. Officially registered and non-standard custom schemes are widely used for different purposes in apps.
+
+The standard HTTP(S) scheme probably offers better flexibility and allows use-cases where the WebViews falls back or overwrites certain URLs.
+
+**Both variants could be allowed.**
+
+> This design decision is up for discussion: https://github.com/NiklasMerz/explainer-webview-local-content/discussions/1
 
 <!-- This may be an open question,
 in which case you should link to any active discussion threads. -->
