@@ -139,6 +139,11 @@ The standard HTTP(S) scheme probably offers better flexibility and allows use-ca
 <!-- This may be an open question,
 in which case you should link to any active discussion threads. -->
 
+### Origin
+
+> TODO: treating each registered path as a seperate origin
+> using HTTP(S) has benefits of a "regular" origin for CSP and CORS
+
 ### Proxy API
 
 > URL handler can be used for a proxy-like implementation of all web requests from the WebView through the native layer
@@ -163,12 +168,6 @@ from high level architectural decisions down to alternative naming choices.]
 The proposed APIs and features are largely inspired by [Androids WebViewAssetLoader](https://developer.android.com/reference/androidx/webkit/WebViewAssetLoader) and [iOS' WKURLSchemeHandler](https://developer.apple.com/documentation/webkit/wkurlschemehandler). This explainer tries to combine the best of both approaches into common APIs for every WebView platform.
 
 
-<!--
 Many thanks for valuable feedback and advice from:
 
-- [Person 1]
-- [Person 2]
-- [etc.]
-
--->
-
+* Rayan Kanso
