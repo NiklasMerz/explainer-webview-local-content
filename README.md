@@ -130,7 +130,7 @@ webview.registerScheme('https://localcontent.mydomain.com') // Used by Android W
 
 The custom scheme variant is straightforward, because this avoids conflicts with existing internet addresses. Officially registered and non-standard custom schemes are widely used for different purposes in apps.
 
-The standard HTTP(S) scheme probably offers better flexibility and allows use-cases where the WebViews falls back or overwrites certain URLs.
+The standard HTTP(S) scheme probably offers better flexibility and compatability with Web APIs and standards such as CSP and CORS. It also allows use-cases where the WebViews falls back or overwrites certain URLs.
 
 **Both variants could be allowed.**
 
@@ -141,17 +141,18 @@ in which case you should link to any active discussion threads. -->
 
 ### Origin
 
-> TODO: treating each registered path as a seperate origin
-> using HTTP(S) has benefits of a "regular" origin for CSP and CORS
+Each registered origin like `https://foo` and `https://bar` should be treated as their own origin like "regular" Web pages in browsers.
 
 ### Proxy API
 
 > URL handler can be used for a proxy-like implementation of all web requests from the WebView through the native layer
 
+The proposed API can be used to proxy Web requests by rewriting the URL to one used by an handler and using that handler to create HTTP requests in the native layer.
+
 ## Considered alternatives
 
-[This should include as many alternatives as you can,
-from high level architectural decisions down to alternative naming choices.]
+<!-- This should include as many alternatives as you can,
+from high level architectural decisions down to alternative naming choices. -->
 
 ### WebViews don't consider the `file:` protocol as privacy-sensitive content.
 
@@ -162,8 +163,8 @@ from high level architectural decisions down to alternative naming choices.]
 
 ## References & acknowledgements
 
-<!-- Your design will change and be informed by many people; acknowledge them in an ongoing way! It helps build community and, as we only get by through the contributions of many, is only fair.]
-[Unless you have a specific reason not to, these should be in alphabetical order. -->
+<!-- Your design will change and be informed by many people; acknowledge them in an ongoing way! It helps build community and, as we only get by through the contributions of many, is only fair.
+Unless you have a specific reason not to, these should be in alphabetical order. -->
 
 The proposed APIs and features are largely inspired by [Androids WebViewAssetLoader](https://developer.android.com/reference/androidx/webkit/WebViewAssetLoader) and [iOS' WKURLSchemeHandler](https://developer.apple.com/documentation/webkit/wkurlschemehandler). This explainer tries to combine the best of both approaches into common APIs for every WebView platform.
 
